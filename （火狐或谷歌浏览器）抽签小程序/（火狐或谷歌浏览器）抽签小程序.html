@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<!--[if IE]>尽量不要用ie<!-->
+<html>
+	<head>
+		<title>抽签小程序</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta charset="utf-8"/>
+	</head>
+	<style>
+		body{
+			background-color:#F0FFFF;
+			text-align:center;
+		}
+		#title{ 
+			border:none;
+			width:400px;
+			font-size:50px;
+			color:white;
+			text-align:center;
+			border-radius:25px;
+			margin-left:auto;
+			margin-right:auto;
+			margin-top:50px;
+			background-color:#80f9be;
+		}
+		#divNum{
+			color:orange;
+			font-size:180px;
+			height:200px;
+			margin-top:-30px;
+		}
+		.input{
+			border-radius:5px;
+			width:50px;
+		}
+		#start_{
+			width:350px;
+			height:80px;
+			font-size:50px;
+			border-radius:25px;
+			border:none;
+			background-color:#80e9fe;
+			margin-top:10px;
+		}
+		#start_:hover{
+			background-color:#6094fe;
+		}
+		#start_:hover:active{
+			background-color:#66afdd;
+		}
+		#start_:active{
+			background-color:#66afdd;
+		}
+		#about{
+			height:50px;
+			width:100%;
+			text-align:center;
+			color:black;
+			
+			bottom:20px;
+			z-index:10;
+			position:absolute;
+		}
+
+	</style>
+	<script>		
+		var Mins=1;
+		var Maxs=15;
+		function onblur_min()
+		{
+			var Mini=document.getElementById('Min').value;
+			if(Mini<0)
+			{
+				alert("亲，最小值不能小于零哦！");
+				document.getElementById('Min').value=Min;
+			}
+			if(Mini>=Maxs)
+			{
+				alert("亲，最小值不能大于等于最大值哦！");
+				document.getElementById('Min').value=Min;
+			}
+			else Mins=Mini;
+		}
+		function onblur_max()
+		{
+			var Maxi=document.getElementById('Max').value;
+			if(Maxi<=Mins)
+			{
+				alert("亲，最大值不能小于等于最小值哦!");
+				document.getElementById('Max').value=Max;
+			}
+			else Maxs=Maxi;
+		}
+		
+		function Start_()
+		{
+			document.getElementById('start_').disabled=true;
+			var j=0;
+			var t=setInterval(function(){ 
+					j++;
+					if(j>=100)
+					{
+						clearInterval(t);
+						if(document.getElementById('start_').disabled)document.getElementById('start_').disabled=false;
+					}
+				
+						
+					//函数1 求指定范围内的一个随机数
+					function selectFrom(min,max){
+						var sum = max-min+1;
+						return Math.floor(Math.random()*sum+min);
+					}
+					//函数2 求指定范围内n个不重复的随机数
+					function myNum(n,min,max){
+					var a = [];
+					for(i=0;i<n;i++){
+						a[i]=selectFrom(min,max);
+							for(z=0;z<i;z++){
+								if(a[i]==a[z])
+							{
+								i--;
+								break;
+							}
+						}
+					}
+					return a;
+					}
+					var result = myNum(7,Mins,Maxs);	
+					document.getElementById('divNum').innerHTML=result;					
+				},10);
+			
+			
+		}
+		
+	</script>
+	<body>
+		<div id="title">
+			<img src="jlu.png" width="120" height="120"/>
+			<p>人工智能学院</p>
+			<img src="sai.png" width="150" height="120"/>
+		</div>
+		<div id="divNum">
+			抽签
+		</div>
+		<div style="margin-top:60px;">
+			范围：
+			<input class="input" id="Min" type="number" name="Max" value="1" onblur="javascript:onblur_min();"/>
+			-
+			<input class="input" id="Max" type="number" name="Min" value="15" onblur="javascript:onblur_max();"/>
+		</div>
+		<button id="start_" name="start_" onclick="javascript:Start_();">开始</button>
+		<div id="about">
+			<hr/>
+			Copyright @SAI JLU<br/>
+			注意：使用IE浏览器请允许执行脚本
+		</div>
+	</body>
+</html>
